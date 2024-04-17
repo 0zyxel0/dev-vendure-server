@@ -49,7 +49,7 @@ export const config: VendureConfig = {
         // the `synchronize` and `migrations` options.
         synchronize: false,
         migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
-        logging: false,
+        logging: true,
         database: path.join(__dirname, '../vendure.sqlite'),
     },
     paymentOptions: {
