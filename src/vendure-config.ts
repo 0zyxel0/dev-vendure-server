@@ -90,9 +90,15 @@ export const config: VendureConfig = {
         }),
         AdminUiPlugin.init({
             route: 'admin',
-            port: 3002,
+            port: 3005,
+            //Change the api host based on the dns being used
             adminUiConfig: {
-                apiPort: 3000,
+              apiHost: process.env.FULL_VENDURE_HOST || 'http://localhost:3000',
+              // Comment out the apiPort when you do not use the custom dns or localhost
+              apiPort: 443,
+              adminApiPath: 'admin-api',
+              hideVendureBranding: true,
+              hideVersion: true,
             },
         }),
     ],
