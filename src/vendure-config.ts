@@ -16,7 +16,7 @@ const IS_DEV = process.env.APP_ENV === 'dev';
 
 export const config: VendureConfig = {
     apiOptions: {
-        port: 3000,
+        port: 3069,
         adminApiPath: 'admin-api',
         shopApiPath: 'shop-api',
         // The following options are useful in development mode,
