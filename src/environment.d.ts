@@ -9,6 +9,7 @@ declare global {
             COOKIE_SECRET: string;
             SUPERADMIN_USERNAME: string;
             SUPERADMIN_PASSWORD: string;
+            APP_PORT: number;
         }
     }
 }
