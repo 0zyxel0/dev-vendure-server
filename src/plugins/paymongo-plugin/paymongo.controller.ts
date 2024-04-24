@@ -20,8 +20,8 @@ export class PaymongoController{
         private connection: TransactionalConnection,
     ) {}
 
-    @Post('paymongo')
-    async webhook(@Req() req: RequestContext, @Res() res: Response) : Promise<void>{
+    // @Post('paymongo')
+    // async webhook(@Req() req: RequestContext, @Res() res: Response) : Promise<void>{
         
-    }
+    // }
 }
