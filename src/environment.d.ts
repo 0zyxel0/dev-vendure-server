@@ -10,6 +10,7 @@ declare global {
             SUPERADMIN_USERNAME: string;
             SUPERADMIN_PASSWORD: string;
             APP_PORT: number;
+            cors: object;
         }
     }
 }

@@ -15,8 +15,12 @@ import path from 'path';
 const IS_DEV = process.env.APP_ENV === 'dev';
 
 export const config: VendureConfig = {
+    //@ts-ignore
+    cors:{
+        exposeHeaders: ['vendure-auth-token']
+    },
     apiOptions: {
-        port: 3069,
+        port: process.env.APP_PORT,
         adminApiPath: 'admin-api',
         shopApiPath: 'shop-api',
         // The following options are useful in development mode,
@@ -65,7 +69,7 @@ export const config: VendureConfig = {
             // For local dev, the correct value for assetUrlPrefix should
             // be guessed correctly, but for production it will usually need
             // to be set manually to match your production url.
-            assetUrlPrefix: IS_DEV ? undefined : 'https://dev-marketplace.scribblecubes.ph/assets/',
+            assetUrlPrefix: IS_DEV ? undefined : 'http://localhost:3000/assets/',
         }),
         DefaultJobQueuePlugin.init({ useDatabaseForBuffer: true }),
         DefaultSearchPlugin.init({ bufferUpdates: false, indexStockStatus: true }),
@@ -90,12 +94,12 @@ export const config: VendureConfig = {
         }),
         AdminUiPlugin.init({
             route: 'admin',
-            port: 3005,
+            port: 3000,
             //Change the api host based on the dns being used
             adminUiConfig: {
               apiHost: process.env.FULL_VENDURE_HOST || 'http://localhost:3000',
               // Comment out the apiPort when you do not use the custom dns or localhost
-              apiPort: 443,
+            //   apiPort: 443,
               adminApiPath: 'admin-api',
               hideVendureBranding: true,
               hideVersion: true,
