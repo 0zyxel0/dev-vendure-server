@@ -46,6 +46,8 @@ export const config: VendureConfig = {
         cookieOptions: {
           secret: process.env.COOKIE_SECRET,
         },
+        // This Option will disable the email verification since all users are already verified from our main application.
+        requireVerification: false
     },
     dbConnectionOptions: {
         type: 'better-sqlite3',
