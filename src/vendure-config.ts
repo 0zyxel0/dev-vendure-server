@@ -53,6 +53,7 @@ export const config: VendureConfig = {
         type: 'better-sqlite3',
         // See the README.md "Migrations" section for an explanation of
         // the `synchronize` and `migrations` options.
+        // Run the synchoronize only once after that disable as the migrations will restart to the fresh database.
         synchronize: false,
         migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
         logging: true,
