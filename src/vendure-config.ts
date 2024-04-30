@@ -68,7 +68,34 @@ export const config: VendureConfig = {
   // When adding or altering custom field definitions, the database will
   // need to be updated. See the "Migrations" section in README.md.
   customFields: {
-    //Apply Order Notes as an optional field for customers
+    // Apply Product optional fields
+    Product: [
+      {
+        name: 'infoUrl',
+        type: 'string',
+        label: [{ languageCode: LanguageCode.en, value: 'Info URL' }],
+      },
+      {
+        name: 'productNotes',
+        type: 'string',
+        label: [{ languageCode: LanguageCode.en, value: 'Product Notes' }],
+      },
+      {
+        name: 'productDeliveryNotes',
+        type: 'string',
+        label: [
+          { languageCode: LanguageCode.en, value: 'Product Delivery Notes' },
+        ],
+      },
+      {
+        name: 'advanceOrderOnly',
+        type: 'boolean',
+        label: [
+          { languageCode: LanguageCode.en, value: 'Advance Order Only' },
+        ],
+      },
+    ],
+    // Apply Order Notes as an optional fields
     Order: [
       {
         name: 'orderNotes',
@@ -89,7 +116,7 @@ export const config: VendureConfig = {
             value: 'Order Schedule',
           },
         ],
-      }
+      },
     ],
   },
   plugins: [
