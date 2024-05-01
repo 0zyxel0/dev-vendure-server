@@ -79,6 +79,9 @@ export const config: VendureConfig = {
         name: 'productNotes',
         type: 'string',
         label: [{ languageCode: LanguageCode.en, value: 'Product Notes' }],
+        ui: {
+          component: 'rich-text-form-input',
+        },
       },
       {
         name: 'productDeliveryNotes',
@@ -86,13 +89,14 @@ export const config: VendureConfig = {
         label: [
           { languageCode: LanguageCode.en, value: 'Product Delivery Notes' },
         ],
+        ui: {
+          component: 'rich-text-form-input',
+        }
       },
       {
         name: 'advanceOrderOnly',
         type: 'boolean',
-        label: [
-          { languageCode: LanguageCode.en, value: 'Advance Order Only' },
-        ],
+        label: [{ languageCode: LanguageCode.en, value: 'Advance Order Only' }],
       },
     ],
     // Apply Order Notes as an optional fields
