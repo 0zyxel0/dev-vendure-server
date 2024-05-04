@@ -16,6 +16,7 @@
     "@vendure/asset-server-plugin": "2.2.2",
     "@vendure/core": "2.2.2",
     "@vendure/email-plugin": "2.2.2",
+    "@vendure/stellate-plugin": "^2.2.3",
     "axios": "^1.6.8",
     "better-sqlite3": "9.5.0",
     "dotenv": "16.4.5",

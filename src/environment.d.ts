@@ -11,6 +11,7 @@ declare global {
             SUPERADMIN_PASSWORD: string;
             APP_PORT: number;
             cors: object;
+            STELLATE_PURGE_API_TOKEN: string;
         }
     }
 }

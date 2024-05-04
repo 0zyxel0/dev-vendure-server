@@ -5,6 +5,7 @@ import {
   VendureConfig,
   LanguageCode,
 } from '@vendure/core'
+import { StellatePlugin, defaultPurgeRules } from '@vendure/stellate-plugin';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin'
 import { AssetServerPlugin } from '@vendure/asset-server-plugin'
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin'
@@ -91,7 +92,7 @@ export const config: VendureConfig = {
         ],
         ui: {
           component: 'rich-text-form-input',
-        }
+        },
       },
       {
         name: 'advanceOrderOnly',
@@ -166,6 +167,18 @@ export const config: VendureConfig = {
         hideVendureBranding: true,
         hideVersion: true,
       },
+    }),
+    StellatePlugin.init({
+      // The Stellate service name, i.e. `<serviceName>.stellate.sh`
+      serviceName: 'scribble-cubes',
+      // The API token for the Stellate Purging API. See the "pre-requisites" section above.
+      apiToken: process.env.STELLATE_PURGE_API_TOKEN,
+      devMode: !IS_DEV || process.env.STELLATE_DEBUG_MODE ? true : false,
+      debugLogging: process.env.STELLATE_DEBUG_MODE ? true : false,
+      purgeRules: [
+        ...defaultPurgeRules,
+        // custom purge rules can be added here
+      ],
     }),
   ],
 }
