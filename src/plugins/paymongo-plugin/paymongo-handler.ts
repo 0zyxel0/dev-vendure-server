@@ -13,6 +13,8 @@ import {
 // import Paymongo, { SecretKey } from '@paymongo/core';
 // const paymongo = new Paymongo(process.env.PAYMONGO_SECRET_KEY as SecretKey);
 // @ts-ignore
+import axios from 'axios';
+// @ts-ignore
 import { v4 as uuidv4 } from 'uuid'
 // import { sdk } from 'payment-provider-sdk';
 
@@ -42,16 +44,66 @@ export const paymongoPaymentHandler = new PaymentMethodHandler({
     metadata,
   ): Promise<CreatePaymentResult> => {
     try {
-        console.log("Request")
+        console.log("Request======")
         console.log(ctx);
-        console.log("Order")
+        console.log("Order=========")
         console.log(order);
-        console.log("Amount")
+        console.log("Amount=========")
         console.log(amount);
-        console.log("Args")
+        console.log("Args==========")
         console.log(args);
-        console.log("Metadata")
+        console.log("Metadata=========")
         console.log(metadata);
+
+
+        // const payload = {
+        //   orderCode: metadata.orderCode,
+        //   orderLines: metadata.orderLines,
+        //   orderTotal: metadata.orderTotal,
+        //   orderTotalQuantity: metadata.orderTotalQuantity,
+        //   orderTotalWithTax: metadata.totalWithTax,
+        // }
+
+        // const encodedStringBtoA = btoa(args.apiKey);
+        // const myOrder = metadata.orderLines;
+        // let orderItems = []
+        // function parseOrder(item) {        
+        //   const parsedItem = {
+        //     currency: 'PHP',
+        //     // images: [encodeURIComponent(item.featuredAsset.preview)],
+        //     amount: item.unitPrice,
+        //     name: item.productVariant.name,
+        //     quantity: item.quantity,
+        //   }
+        //   orderItems.push(parsedItem)          
+        // }
+
+        // myOrder.forEach(parseOrder)
+
+        // const payload = {
+        //   data: {
+        //     attributes: {
+        //       description: `Order : ${body.orderCode}`,
+        //       line_items: orderItems,
+        //       send_email_receipt: true,
+        //       show_description: true,
+        //       show_line_items: true,
+        //       payment_method_types: [
+        //         'billease',
+        //         'card',
+        //         'dob',
+        //         'dob_ubp',
+        //         'gcash',
+        //         'grab_pay',
+        //         'paymaya',
+        //       ],
+        //       cancel_url: `${STOREFRONT_BASEURL}/checkout`,
+        //       reference_number: body.orderCode,
+        //       success_url: `${STOREFRONT_BASEURL}/checkout/success?oid=${body.orderCode}`,
+        //       statement_descriptor: `Order : ${body.orderCode}`,
+        //     },
+        //   },
+        // }
 
       // const result = await sdk.charges.create({
       //     amount,
@@ -67,8 +119,8 @@ export const paymongoPaymentHandler = new PaymentMethodHandler({
 
       return {
         amount: order.total,
-        // state: 'Authorized' as const,
-        state: 'Settled' as const,
+        state: 'Authorized' as const,
+        // state: 'Settled' as const,
         transactionId: result.id.toString(),
         metadata: {
           cardInfo: result.cardInfo,
