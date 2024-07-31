@@ -26,6 +26,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@vendure/ui-devkit": "^2.1.9",
     "@vendure/cli": "2.2.5",
     "concurrently": "8.2.2"
   }
