@@ -12,6 +12,12 @@ declare global {
             APP_PORT: number;
             cors: object;
             STELLATE_PURGE_API_TOKEN: string;
+            DB_HOST: string;
+            DB_PORT: number;
+            DB_NAME: string;
+            DB_USERNAME: string;
+            DB_PASSWORD: string;
+            DB_SCHEMA: string;
         }
     }
 }

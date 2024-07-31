@@ -4,6 +4,7 @@ import {
   DefaultSearchPlugin,
   VendureConfig,
   LanguageCode,
+  OrderPlacedEvent,
 } from '@vendure/core'
 import { StellatePlugin, defaultPurgeRules } from '@vendure/stellate-plugin';
 import { defaultEmailHandlers, EmailPlugin } from '@vendure/email-plugin'
@@ -11,6 +12,8 @@ import { AssetServerPlugin } from '@vendure/asset-server-plugin'
 import { AdminUiPlugin } from '@vendure/admin-ui-plugin'
 import { MultivendorPlugin } from './plugins/multivendor-plugin/multivendor.plugin'
 import { paymongoPaymentHandler } from './plugins/paymongo-plugin/paymongo-handler'
+import { WebhookPlugin } from '@pinelab/vendure-plugin-webhook';
+import { compileUiExtensions } from '@vendure/ui-devkit/compiler'
 import 'dotenv/config'
 import path from 'path'
 
@@ -53,15 +56,28 @@ export const config: VendureConfig = {
     // This Option will disable the email verification since all users are already verified from our main application.
     requireVerification: false,
   },
-  dbConnectionOptions: {
-    type: 'better-sqlite3',
+  dbConnectionOptions: {    
     // See the README.md "Migrations" section for an explanation of
     // the `synchronize` and `migrations` options.
     // Run the synchoronize only once after that disable as the migrations will restart to the fresh database.
-    synchronize: false,
+    // type: 'better-sqlite3',
+    // synchronize: false,
+    // migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
+    // logging: true,
+    // database: path.join(__dirname, '../vendure.sqlite'),
+
+    type: 'postgres',
+    // See the README.md "Migrations" section for an explanation of
+    // the `synchronize` and `migrations` options.
+    synchronize: true,
     migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
-    logging: true,
-    database: path.join(__dirname, '../vendure.sqlite'),
+    logging: false,
+    database: process.env.DB_NAME,
+    schema: process.env.DB_SCHEMA,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD
   },
   paymentOptions: {
     paymentMethodHandlers: [dummyPaymentHandler, paymongoPaymentHandler],
@@ -125,6 +141,21 @@ export const config: VendureConfig = {
     ],
   },
   plugins: [
+    WebhookPlugin.init({
+      /**
+       * Optional: 'delay' waits and deduplicates events for 3000ms.
+       * If 4 events were fired for the same channel within 3 seconds,
+       * only 1 webhook call will be sent
+       */
+      delay: 3000,
+      events: [OrderPlacedEvent],
+      /**
+       * Optional: A requestTransformer allows you to send custom headers
+       * and a custom body with your webhook call.
+       * If no transformers are specified
+       */
+      requestTransformers: [],
+    }),
     AssetServerPlugin.init({
       route: 'assets',
       assetUploadDir: path.join(__dirname, '../static/assets'),
@@ -167,6 +198,11 @@ export const config: VendureConfig = {
         hideVendureBranding: true,
         hideVersion: true,
       },
+      app: compileUiExtensions({
+        outputPath: path.join(__dirname, '__admin-ui'),
+        // Add the WebhookPlugin's UI to the admin
+        extensions: [WebhookPlugin.ui],
+      }),
     }),
     StellatePlugin.init({
       // The Stellate service name, i.e. `<serviceName>.stellate.sh`
