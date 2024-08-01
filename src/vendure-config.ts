@@ -60,24 +60,24 @@ export const config: VendureConfig = {
     // See the README.md "Migrations" section for an explanation of
     // the `synchronize` and `migrations` options.
     // Run the synchoronize only once after that disable as the migrations will restart to the fresh database.
-    // type: 'better-sqlite3',
-    // synchronize: false,
-    // migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
-    // logging: true,
-    // database: path.join(__dirname, '../vendure.sqlite'),
-
-    type: 'postgres',
-    // See the README.md "Migrations" section for an explanation of
-    // the `synchronize` and `migrations` options.
-    synchronize: true,
+    type: 'better-sqlite3',
+    synchronize: false,
     migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
-    logging: false,
-    database: process.env.DB_NAME,
-    schema: process.env.DB_SCHEMA,
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    username: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD
+    logging: true,
+    database: path.join(__dirname, '../vendure.sqlite'),
+
+    // type: 'postgres',
+    // // See the README.md "Migrations" section for an explanation of
+    // // the `synchronize` and `migrations` options.
+    // synchronize: true,
+    // migrations: [path.join(__dirname, './migrations/*.+(js|ts)')],
+    // logging: false,
+    // database: process.env.DB_NAME,
+    // schema: process.env.DB_SCHEMA,
+    // host: process.env.DB_HOST,
+    // port: process.env.DB_PORT,
+    // username: process.env.DB_USERNAME,
+    // password: process.env.DB_PASSWORD
   },
   paymentOptions: {
     paymentMethodHandlers: [dummyPaymentHandler, paymongoPaymentHandler],

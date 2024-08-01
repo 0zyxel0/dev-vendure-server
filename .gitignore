@@ -3,3 +3,6 @@ dist
 admin-ui
 static/email/test-emails
 .env
+src/__admin-ui
+pgdata
+pgadmin-data
