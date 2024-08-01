@@ -13,11 +13,38 @@ import { AdminUiPlugin } from '@vendure/admin-ui-plugin'
 import { MultivendorPlugin } from './plugins/multivendor-plugin/multivendor.plugin'
 import { paymongoPaymentHandler } from './plugins/paymongo-plugin/paymongo-handler'
 import { WebhookPlugin } from '@pinelab/vendure-plugin-webhook';
-import { compileUiExtensions } from '@vendure/ui-devkit/compiler'
+import { compileUiExtensions } from '@vendure/ui-devkit/compiler';
+import { RequestTransformer } from '@pinelab/vendure-plugin-webhook';
+
 import 'dotenv/config'
 import path from 'path'
 
 const IS_DEV = process.env.APP_ENV === 'dev'
+
+export const stringifyOrderTransformer = new RequestTransformer({
+  name: 'Stringify Order events',
+  supportedEvents: [OrderPlacedEvent],
+  transform: (event, injector, webhook) => {
+    if (event instanceof OrderPlacedEvent) {
+      return {
+        body: JSON.stringify({
+          type: webhook.event, // Name of the event ("OrderPlacedEvent")
+          event: {
+            ...event,
+            ctx: undefined, // Remove ctx or use event.ctx.serialize()
+          },
+        }),
+        headers: {
+          // authorization: 'Bearer MyToken',
+          // 'x-custom-header': 'custom-example-header',
+          'content-type': 'application/json',
+        },
+      };
+    } else {
+      throw Error(`This transformer is only for OrderPlacedEvents!`);
+    }
+  },
+});
 
 export const config: VendureConfig = {
   //@ts-ignore
@@ -154,7 +181,7 @@ export const config: VendureConfig = {
        * and a custom body with your webhook call.
        * If no transformers are specified
        */
-      requestTransformers: [],
+      requestTransformers: [stringifyOrderTransformer],
     }),
     AssetServerPlugin.init({
       route: 'assets',
