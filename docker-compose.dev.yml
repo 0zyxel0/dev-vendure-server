@@ -32,27 +32,27 @@ services:
       DB_PASSWORD: postgres
     depends_on:
       - ldb
-  # ldb:
-  #   image: postgres
-  #   volumes:
-  #     - ./pgdata:/var/lib/postgresql/data
-  #   ports:
-  #     - 5432:5432
-  #   environment:
-  #     POSTGRES_PASSWORD: postgres
-  #     POSTGRES_DB: postgres
-  # pgadmin:
-  #   image: dpage/pgadmin4:latest
-  #   restart: unless-stopped
-  #   ports:
-  #     - "5050:80"
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #     PGADMIN_CONFIG_SERVER_MODE: 'False'
-  #   depends_on:
-  #     - ldb
-  #   volumes:
-  #     # This will mount your file system folder to the container.
-  #     - ./pgadmin-data:/var/lib/pgadmin
-  #     - ./pgtemp:/var/tmp
+  ldb:
+    image: postgres
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: unless-stopped
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    depends_on:
+      - ldb
+    volumes:
+      # This will mount your file system folder to the container.
+      - ./pgadmin-data:/var/lib/pgadmin
+      - ./pgtemp:/var/tmp
