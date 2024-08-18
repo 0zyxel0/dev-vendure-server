@@ -143,7 +143,10 @@ export const config: VendureConfig = {
         label: [{ languageCode: LanguageCode.en, value: 'Advance Order Only' }],
       },
     ],
-    // Apply Order Notes as an optional fields
+    /* 
+    - Apply Order Notes as an optional fields
+    - Apply Merchant Public ID to the Orders
+    */
     Order: [
       {
         name: 'orderNotes',
@@ -162,6 +165,16 @@ export const config: VendureConfig = {
           {
             languageCode: LanguageCode.en,
             value: 'Order Schedule',
+          },
+        ],
+      },
+      {
+        name: 'merchantPublicId',
+        type: 'string',
+        label: [
+          {
+            languageCode: LanguageCode.en,
+            value: 'Merchant Public ID',
           },
         ],
       },
