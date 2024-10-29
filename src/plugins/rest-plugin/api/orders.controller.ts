@@ -36,7 +36,6 @@ export class OrderController {
         @Body() body: OrderQueryDto,
         @Ctx() ctx: RequestContext
     ): Promise<Order | undefined> {
-        console.log(ctx);
         return this.orderService.findOne(ctx, body.orderId);
     }
 
@@ -45,7 +44,6 @@ export class OrderController {
         @Body() body: OrderCodeQueryDto,
         @Ctx() ctx: RequestContext
     ): Promise<Order | undefined> {
-        console.log(ctx);
         return this.orderService.findOneByCode(ctx, body.orderCode);
     }
 }
