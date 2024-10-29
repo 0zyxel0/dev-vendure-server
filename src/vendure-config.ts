@@ -15,7 +15,7 @@ import { paymongoPaymentHandler } from './plugins/paymongo-plugin/paymongo-handl
 import { WebhookPlugin } from '@pinelab/vendure-plugin-webhook';
 import { compileUiExtensions } from '@vendure/ui-devkit/compiler';
 import { RequestTransformer } from '@pinelab/vendure-plugin-webhook';
-
+import { RestPlugin } from './plugins/rest-plugin/rest.plugin';
 import 'dotenv/config'
 import path from 'path'
 
@@ -51,6 +51,7 @@ export const config: VendureConfig = {
   cors: {
     exposeHeaders: ['vendure-auth-token'],
   },
+  
   apiOptions: {
     port: process.env.APP_PORT,
     adminApiPath: 'admin-api',
@@ -71,6 +72,7 @@ export const config: VendureConfig = {
         }
       : {}),
   },
+  
   authOptions: {
     tokenMethod: ['bearer', 'cookie'],
     superadminCredentials: {
@@ -181,6 +183,7 @@ export const config: VendureConfig = {
     ],
   },
   plugins: [
+    RestPlugin,
     WebhookPlugin.init({
       /**
        * Optional: 'delay' waits and deduplicates events for 3000ms.
